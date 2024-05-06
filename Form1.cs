@@ -25,6 +25,20 @@ namespace _6_laba
             };
 
             emitters.Add(this.emitter);
+
+            /*/ добавил гравитон
+            emitter.impactPoints.Add(new GravityPoint
+            {
+                X = picDisplay.Width / 2 + 100,
+                Y = picDisplay.Height / 2,
+            });
+
+            // добавил второй гравитон
+            emitter.impactPoints.Add(new GravityPoint
+            {
+                X = picDisplay.Width / 2 - 100,
+                Y = picDisplay.Height / 2,
+            });*/
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -50,6 +64,16 @@ namespace _6_laba
         {
             emitter.Direction = tbDirection.Value;
             lblDirection.Text = $"{tbDirection.Value}°";
+        }
+
+        private void picDisplay_MouseClick(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void picDisplay_Paint(object sender, PaintEventArgs e)
+        {
+            
         }
     }
 }

@@ -8,7 +8,7 @@ namespace _6_laba
 {
     public class Emitter
     {
-        List<Particle> particles = new List<Particle>();
+        public List<Particle> particles = new List<Particle>();
         public List<IImpactPoint> impactPoints = new();
 
         public int MousePositionX;
@@ -54,7 +54,6 @@ namespace _6_laba
                 {
                     if (particlesToCreate > 0)
                     {
-                        
                         particlesToCreate -= 1;
                         ResetParticle(particle);
                     }
@@ -110,23 +109,6 @@ namespace _6_laba
             particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
 
             particle.Radius = Particle.rand.Next(RadiusMin, RadiusMax);
-        }
-    }
-
-    public class TopEmitter : Emitter
-    {
-        public int Width; // длина экрана
-
-        public override void ResetParticle(Particle particle)
-        {
-            base.ResetParticle(particle); // вызываем базовый сброс частицы, там жизнь переопределяется и все такое
-
-            // а теперь тут уже подкручиваем параметры движения
-            particle.X = Particle.rand.Next(Width); // позиция X -- произвольная точка от 0 до Width
-            particle.Y = 0;  // ноль -- это верх экрана 
-
-            particle.SpeedY = 1; // падаем вниз по умолчанию
-            particle.SpeedX = Particle.rand.Next(-2, 2); // разброс влево и вправа у частиц 
         }
     }
 }

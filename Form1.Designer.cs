@@ -34,17 +34,21 @@
             tbDirection = new TrackBar();
             label1 = new Label();
             lblDirection = new Label();
+            trackBar1 = new TrackBar();
             ((System.ComponentModel.ISupportInitialize)picDisplay).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tbDirection).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             SuspendLayout();
             // 
             // picDisplay
             // 
             picDisplay.Location = new Point(-2, 1);
             picDisplay.Name = "picDisplay";
-            picDisplay.Size = new Size(919, 548);
+            picDisplay.Size = new Size(1094, 548);
             picDisplay.TabIndex = 0;
             picDisplay.TabStop = false;
+            picDisplay.Paint += picDisplay_Paint;
+            picDisplay.MouseClick += picDisplay_MouseClick;
             picDisplay.MouseMove += picDisplay_MouseMove;
             // 
             // timer1
@@ -55,7 +59,7 @@
             // 
             // tbDirection
             // 
-            tbDirection.Location = new Point(12, 586);
+            tbDirection.Location = new Point(12, 575);
             tbDirection.Maximum = 359;
             tbDirection.Name = "tbDirection";
             tbDirection.Size = new Size(193, 56);
@@ -65,7 +69,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 563);
+            label1.Location = new Point(12, 552);
             label1.Name = "label1";
             label1.Size = new Size(104, 20);
             label1.TabIndex = 2;
@@ -74,17 +78,25 @@
             // lblDirection
             // 
             lblDirection.AutoSize = true;
-            lblDirection.Location = new Point(211, 586);
+            lblDirection.Location = new Point(211, 575);
             lblDirection.Name = "lblDirection";
-            lblDirection.Size = new Size(0, 20);
+            lblDirection.Size = new Size(23, 20);
             lblDirection.TabIndex = 3;
             lblDirection.Text = "0°";
+            // 
+            // trackBar1
+            // 
+            trackBar1.Location = new Point(301, 586);
+            trackBar1.Name = "trackBar1";
+            trackBar1.Size = new Size(165, 56);
+            trackBar1.TabIndex = 4;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(920, 654);
+            ClientSize = new Size(1096, 703);
+            Controls.Add(trackBar1);
             Controls.Add(lblDirection);
             Controls.Add(label1);
             Controls.Add(tbDirection);
@@ -93,6 +105,7 @@
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)picDisplay).EndInit();
             ((System.ComponentModel.ISupportInitialize)tbDirection).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -104,5 +117,6 @@
         private TrackBar tbDirection;
         private Label label1;
         private Label lblDirection;
+        private TrackBar trackBar1;
     }
 }
