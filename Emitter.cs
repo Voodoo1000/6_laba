@@ -15,7 +15,7 @@ namespace _6_laba
         public int MousePositionY;
 
         public float GravitationX = 0;
-        public float GravitationY = 0;
+        public float GravitationY = 1;
 
         public int ParticlesCount = 500;
 

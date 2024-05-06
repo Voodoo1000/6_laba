@@ -4,44 +4,27 @@ namespace _6_laba
 {
     public partial class Form1 : Form
     {
-        List<Particle> particles = new();
-        Emitter emitter = new();
-
-        private int MousePositionX = 0;
-        private int MousePositionY = 0;
-
+        List<Emitter> emitters = new();
+        Emitter emitter;
         public Form1()
         {
             InitializeComponent();
-
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
-            emitter = new TopEmitter
+            this.emitter = new Emitter
             {
-                Width = picDisplay.Width,
-                GravitationY = 0.25f
+                Direction = 0,
+                Spreading = 10,
+                SpeedMin = 10,
+                SpeedMax = 10,
+                ColorFrom = Color.Gold,
+                ColorTo = Color.FromArgb(0, Color.Red),
+                ParticlesPerTick = 10,
+                X = picDisplay.Width / 2,
+                Y = picDisplay.Height / 2,
             };
 
-            // гравитон
-            emitter.impactPoints.Add(new GravityPoint
-            {
-                X = (float)(picDisplay.Width * 0.25),
-                Y = picDisplay.Height / 2
-            });
-
-            // в центре антигравитон
-            emitter.impactPoints.Add(new AntiGravityPoint
-            {
-                X = picDisplay.Width / 2,
-                Y = picDisplay.Height / 2
-            });
-
-            // снова гравитон
-            emitter.impactPoints.Add(new GravityPoint
-            {
-                X = (float)(picDisplay.Width * 0.75),
-                Y = picDisplay.Height / 2
-            });
+            emitters.Add(this.emitter);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -56,11 +39,17 @@ namespace _6_laba
 
             picDisplay.Invalidate();
         }
-        
+
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
             emitter.MousePositionX = e.X;
             emitter.MousePositionY = e.Y;
+        }
+
+        private void tbDirection_Scroll(object sender, EventArgs e)
+        {
+            emitter.Direction = tbDirection.Value;
+            lblDirection.Text = $"{tbDirection.Value}°";
         }
     }
 }
