@@ -16,6 +16,12 @@ namespace _6_laba
 
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
+            emitter = new TopEmitter
+            {
+                Width = picDisplay.Width,
+                GravitationY = 0.25f
+            };
+
             // гравитон
             emitter.impactPoints.Add(new GravityPoint
             {
