@@ -7,13 +7,13 @@ namespace _6_laba
     public class Radar : IImpactPoint
     {
         // Позиция радара
-        public PointF Position { get; set; }
+        public PointF Position;
         // Радиус области
-        public float Radius { get; set; }
+        public float Radius;
         // Количество частиц в области
-        public int ParticlesCount { get; private set; }
+        public int ParticlesCount;
         // Флаг, определяющий, включен ли радар
-        public bool Enabled { get; set; } = false;
+        public bool Enabled = false;
 
         // Ссылка на эмиттер частиц
         Emitter emitter;

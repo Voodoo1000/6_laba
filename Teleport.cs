@@ -9,13 +9,13 @@ namespace _6_laba
         // Радиус телепорта
         public float Radius = 50;
         // Позиция входа телепорта
-        public PointF Entry { get; set; }
+        public PointF Entry;
         // Позиция выхода телепорта
-        public PointF Exit { get; set; }
-        // Свойство для управления активностью телепорта
-        public bool Enabled { get; set; } = false;
-        // Свойство для хранения текущего направления выхода телепорта
-        public int ExitDirection { get; set; }
+        public PointF Exit;
+        // Поле для управления активностью телепорта
+        public bool Enabled = false;
+        // Поле для хранения текущего направления выхода телепорта
+        public int ExitDirection;
 
         // Ссылка на эмиттер частиц
         Emitter emitter;

@@ -7,7 +7,6 @@ namespace _6_laba
     public class ParticleColorful : Particle
     {
         // Поля для хранения начального цвета и цветовых интервалов
-        public Color InitialColor;
         public Color FromColor;
         public Color ToColor;
 

@@ -22,7 +22,7 @@ namespace _6_laba
         public static Random rand = new Random();
 
         // Свойство для определения нахождения частицы в области радара
-        public bool IsInRadarArea { get; set; }
+        public bool IsInRadarArea;
 
         // Конструктор класса Particle
         public Particle()

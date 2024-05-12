@@ -45,7 +45,7 @@ namespace _6_laba
         public Color ColorTo = Color.FromArgb(0, Color.Black);
 
         // Создание новой частицы
-        public virtual Particle CreateParticle()
+        public Particle CreateParticle()
         {
             var particle = new ParticleColorful(); // Используем ParticleColorful для поддержки разноцветных частиц
             particle.FromColor = ColorFrom; // Устанавливаем начальный цвет частицы
@@ -55,7 +55,7 @@ namespace _6_laba
         }
 
         // Обновление состояния эмиттера
-        public virtual void UpdateState()
+        public void UpdateState()
         {
             int particlesToCreate = ParticlesPerTick;
 
