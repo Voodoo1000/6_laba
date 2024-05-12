@@ -1,4 +1,8 @@
-﻿namespace _6_laba
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+
+namespace _6_laba
 {
     public class Radar : IImpactPoint
     {
@@ -8,9 +12,13 @@
         public float Radius { get; set; }
         // Количество частиц в области
         public int ParticlesCount { get; private set; }
+        // Флаг, определяющий, включен ли радар
         public bool Enabled { get; set; } = false;
 
+        // Ссылка на эмиттер частиц
         Emitter emitter;
+
+        // Конструктор
         public Radar(PointF position, float radius, Emitter emitter)
         {
             Position = position;
@@ -18,6 +26,7 @@
             this.emitter = emitter;
         }
 
+        // Метод для обновления количества частиц внутри области радара
         public void UpdateParticlesCount(List<Particle> particles)
         {
             if (Enabled)
@@ -57,6 +66,7 @@
             }
         }
 
+        // Метод для проверки, находится ли частица внутри области радара
         private bool IsInsideRadar(Particle particle)
         {
             // Проверяем, находится ли частица внутри области радара
@@ -65,6 +75,7 @@
             return dx * dx + dy * dy <= Radius * Radius;
         }
 
+        // Метод для отрисовки радара
         public override void Render(Graphics g)
         {
             if (Enabled)
@@ -79,6 +90,7 @@
             }
         }
 
+        // Метод для воздействия радара на частицу
         public override void ImpactParticle(Particle particle)
         {
             // Нет необходимости в этом методе для радара

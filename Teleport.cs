@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _6_laba
 {
     public class Teleport : IImpactPoint
     {
+        // Радиус телепорта
         public float Radius = 50;
+        // Позиция входа телепорта
         public PointF Entry { get; set; }
+        // Позиция выхода телепорта
         public PointF Exit { get; set; }
         // Свойство для управления активностью телепорта
         public bool Enabled { get; set; } = false;
-
         // Свойство для хранения текущего направления выхода телепорта
         public int ExitDirection { get; set; }
+
+        // Ссылка на эмиттер частиц
         Emitter emitter;
 
+        // Конструктор
         public Teleport(PointF entry, PointF exit, Emitter emitter)
         {
             Entry = entry;
@@ -26,6 +28,7 @@ namespace _6_laba
             this.emitter = emitter;
         }
 
+        // Метод для телепортирования частиц внутри телепорта
         public void TeleportParticles(List<Particle> particles)
         {
             if (Enabled)
@@ -56,10 +59,7 @@ namespace _6_laba
             }
         }
 
-
-
-
-
+        // Метод для проверки, находится ли частица внутри телепорта
         private bool IsInsideTeleport(Particle particle, PointF center, float radius)
         {
             // Проверяем, находится ли частица внутри круга телепорта
@@ -68,6 +68,7 @@ namespace _6_laba
             return dx * dx + dy * dy <= radius * radius;
         }
 
+        // Метод для отрисовки телепорта
         public override void Render(Graphics g)
         {
             if (Enabled)
@@ -90,6 +91,7 @@ namespace _6_laba
             }
         }
 
+        // Метод для воздействия телепорта на частицу
         public override void ImpactParticle(Particle particle)
         {
             // Для телепорта нет необходимости в этом методе

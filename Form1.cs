@@ -1,25 +1,31 @@
-
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace _6_laba
 {
+    // Класс Form1 представляет главную форму приложения
     public partial class Form1 : Form
     {
-        List<Emitter> emitters = new();
-        Emitter emitter;
-        Teleport teleport;
-        Radar radar;
+        List<Emitter> emitters = new(); // Список источников частиц
+        Emitter emitter; // Текущий источник частиц
+        Teleport teleport; // Телепорт
+        Radar radar; // Радар
 
-        // Флаг для определения текущего действия мыши (перемещение входа или выхода телепорта)
+        // Флаги для определения текущего действия мыши (перемещение входа или выхода телепорта)
         bool isMovingEntry = false;
         bool isMovingExit = false;
 
-        bool isResizingRadar = false;
         public Form1()
         {
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
-
+            // Создание источника частиц (эмиттера)
             this.emitter = new Emitter
             {
                 Direction = 0,
@@ -33,22 +39,9 @@ namespace _6_laba
                 Y = picDisplay.Height / 2,
             };
 
-            emitters.Add(this.emitter);
+            emitters.Add(this.emitter); // Добавление источника частиц в список
 
-            /* // добавил гравитон
-             emitter.impactPoints.Add(new GravityPoint
-             {
-                 X = picDisplay.Width / 2 + 100,
-                 Y = picDisplay.Height / 2,
-             });
-
-             // добавил второй гравитон
-             emitter.impactPoints.Add(new GravityPoint
-             {
-                 X = picDisplay.Width / 2 - 100,
-                 Y = picDisplay.Height / 2,
-             });*/
-
+            // Добавление точки воздействия на частицы (цветной круг)
             emitter.impactPoints.Add(new ColorPoint
             {
                 X = picDisplay.Width / 2 - 100,
@@ -56,43 +49,47 @@ namespace _6_laba
                 ChangeToColor = Color.Blue
             });
 
+            // Создание и инициализация телепорта и радара
             teleport = new Teleport(new PointF(picDisplay.Width / 2 - 100, picDisplay.Height / 2), new PointF(picDisplay.Width / 2 + 100, picDisplay.Height / 2), emitter);
             radar = new Radar(new PointF(picDisplay.Width / 2, picDisplay.Height / 2), 50, emitter);
 
+            // Обработчик события изменения колесика мыши на элементе picDisplay
             picDisplay.MouseWheel += picDisplay_MouseWheel;
         }
 
+        // Обработчик события таймера (обновление состояния эмиттера и отрисовка)
         private void timer1_Tick(object sender, EventArgs e)
         {
-            emitter.UpdateState();
+            emitter.UpdateState(); // Обновление состояния эмиттера
 
-            teleport.TeleportParticles(emitter.particles);
-            radar.UpdateParticlesCount(emitter.particles);
+            teleport.TeleportParticles(emitter.particles); // Обработка телепортирования частиц
+            radar.UpdateParticlesCount(emitter.particles); // Обновление счетчика частиц на радаре
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
                 g.Clear(Color.Black);
-                emitter.Render(g);
-                teleport.Render(g);
-                radar.Render(g);
+                emitter.Render(g); // Отрисовка частиц
+                teleport.Render(g); // Отрисовка телепорта
+                radar.Render(g); // Отрисовка радара
             }
 
-            picDisplay.Invalidate();
+            picDisplay.Invalidate(); // Перерисовка элемента picDisplay
         }
 
+        // Обработчик события перемещения мыши на элементе picDisplay
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
             if (isMovingEntry)
             {
-                teleport.Entry = new PointF(e.X, e.Y);
+                teleport.Entry = new PointF(e.X, e.Y); // Перемещение входа телепорта
             }
             else if (isMovingExit)
             {
-                teleport.Exit = new PointF(e.X, e.Y);
+                teleport.Exit = new PointF(e.X, e.Y); // Перемещение выхода телепорта
             }
             else
             {
-                // Если мы не перемещаем телепорт, то, возможно, перемещаем цветную точку
+                // Перемещение цветной точки или радара
                 if (emitter.impactPoints.FirstOrDefault() is ColorPoint colorPoint)
                 {
                     colorPoint.X = e.X;
@@ -101,7 +98,7 @@ namespace _6_laba
 
                 radar.Position = new PointF(e.X, e.Y);
 
-                // Перерисовываем радар и область в picDisplay
+                // Перерисовка радара и эмиттера
                 using (var g = Graphics.FromImage(picDisplay.Image))
                 {
                     g.Clear(Color.Black);
@@ -112,11 +109,14 @@ namespace _6_laba
             }
         }
 
+        // Обработчик события изменения положения ползунка tbDirection
         private void tbDirection_Scroll(object sender, EventArgs e)
         {
-            emitter.Direction = tbDirection.Value;
-            lblDirection.Text = $"{tbDirection.Value}°";
+            emitter.Direction = tbDirection.Value; // Установка направления эмиттера
+            lblDirection.Text = $"{tbDirection.Value}°"; // Обновление текста на метке
         }
+
+        // Обработчик события щелчка мыши на элементе picDisplay
         private void picDisplay_MouseClick(object sender, MouseEventArgs e)
         {
             // Перемещение входа телепорта при клике левой кнопкой мыши
@@ -131,15 +131,17 @@ namespace _6_laba
             }
         }
 
+        // Обработчик события изменения положения ползунка tbColor
         private void tbColor_Scroll(object sender, EventArgs e)
         {
             if (emitter.impactPoints.FirstOrDefault() is ColorPoint colorPoint)
             {
                 colorPoint.Radius = tbColor.Value;
-                lblRColor.Text = $"{tbColor.Value}";
+                lblRColor.Text = $"{tbColor.Value}"; // Обновление текста на метке
             }
         }
 
+        // Обработчик события нажатия на кнопку btnChooseColor
         private void btnChooseColor_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
@@ -152,43 +154,49 @@ namespace _6_laba
             }
         }
 
+        // Обработчик события изменения положения ползунка tbSpreading
         private void tbSpreading_Scroll(object sender, EventArgs e)
         {
             emitter.Spreading = tbSpreading.Value;
-            lblSpreading.Text = $"{tbSpreading.Value}°";
+            lblSpreading.Text = $"{tbSpreading.Value}°"; // Обновление текста на метке
         }
 
+        // Обработчик события изменения состояния флажка chkColorChange
         private void chkColorChange_CheckedChanged(object sender, EventArgs e)
         {
             if (emitter.impactPoints.FirstOrDefault() is ColorPoint colorPoint)
             {
-                colorPoint.ChangeColorEnabled = chkColorChange.Checked;
+                colorPoint.ChangeColorEnabled = chkColorChange.Checked; // Установка состояния смены цвета
 
-                tbColor.Enabled = chkColorChange.Checked;
-                btnChooseColor.Enabled = chkColorChange.Checked;
+                tbColor.Enabled = chkColorChange.Checked; // Установка состояния элемента управления
+                btnChooseColor.Enabled = chkColorChange.Checked; // Установка состояния элемента управления
             }
         }
 
+        // Обработчик события изменения состояния флажка chkEnableTeleport
         private void chkEnableTeleport_CheckedChanged(object sender, EventArgs e)
         {
-            teleport.Enabled = chkEnableTeleport.Checked;
+            teleport.Enabled = chkEnableTeleport.Checked; // Установка состояния телепорта
 
-            // Блокируем или разблокируем TrackBar в зависимости от состояния CheckBox
-            tbTeleportDirection.Enabled = chkEnableTeleport.Checked;
+            tbTeleportDirection.Enabled = chkEnableTeleport.Checked; // Установка состояния элемента управления
         }
 
+        // Обработчик события изменения положения ползунка tbTeleportDirection
         private void tbTeleportDirection_Scroll(object sender, EventArgs e)
         {
             teleport.ExitDirection = tbTeleportDirection.Value;
-            lblTeleportDirection.Text = $"{tbTeleportDirection.Value}°";
+            lblTeleportDirection.Text = $"{tbTeleportDirection.Value}°"; // Обновление текста на метке
         }
 
+        // Обработчик события изменения состояния флажка chkEnableRadar
+        private void chkEnableRadar_CheckedChanged(object sender, EventArgs e)
+        {
+            radar.Enabled = chkEnableRadar.Checked; // Установка состояния радара
+        }
+
+        // Обработчик события прокрутки колесика мыши на элементе picDisplay
         private void picDisplay_MouseWheel(object sender, MouseEventArgs e)
         {
-            // Если мы не в режиме изменения размера радара, выходим
-            /*if (!isResizingRadar)
-                return;*/
-
             // Получаем текущий радиус радара
             float currentRadius = radar.Radius;
 
@@ -210,12 +218,6 @@ namespace _6_laba
                 teleport.Render(g);
                 radar.Render(g);
             }
-
-        }
-
-        private void chkEnableRadar_CheckedChanged(object sender, EventArgs e)
-        {
-            radar.Enabled = chkEnableRadar.Checked;
         }
     }
 }
