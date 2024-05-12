@@ -8,6 +8,7 @@ namespace _6_laba
 {
     public class ParticleColorful : Particle
     {
+        public Color InitialColor;
         // два новых поля под цвет начальный и конечный
         public Color FromColor;
         public Color ToColor;

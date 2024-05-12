@@ -15,7 +15,7 @@ namespace _6_laba
         public int MousePositionY;
 
         public float GravitationX = 0;
-        public float GravitationY = 1;
+        public float GravitationY = 0.5f;
 
         public int ParticlesCount = 500;
 
@@ -44,7 +44,7 @@ namespace _6_laba
             return particle;
         }
 
-        public void UpdateState()
+        public virtual void UpdateState()
         {
             int particlesToCreate = ParticlesPerTick;
 
@@ -62,7 +62,7 @@ namespace _6_laba
                 {
                     foreach (var point in impactPoints)
                     {
-                        point.ImpactParticle(particle);
+                        point.ImpactParticle(particle); // Проверяем попадание частицы в телепорт
                     }
 
                     particle.SpeedX += GravitationX;

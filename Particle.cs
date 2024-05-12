@@ -19,6 +19,7 @@ namespace _6_laba
         public float Life;
 
         public static Random rand = new();
+        public bool IsInRadarArea { get; set; }
 
         public Particle()
         {
